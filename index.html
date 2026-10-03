@@ -7,16 +7,17 @@
   <meta name="description" content="Independent aviation expertise for operators, owners, lessors, lessees. Cargo aircraft, ACMI, dry lease, charter and consulting." />
   <style>
     :root {
-      --navy: #0b1220;
-      --navy-light: #141e30;
-      --navy-card: #182234;
+      --navy: #0a0f1a;
+      --navy-mid: #111827;
+      --navy-card: #161f2e;
       --orange: #e85d04;
-      --orange-hover: #f48c06;
-      --cream: #f8f5f0;
+      --orange-soft: #f48c06;
+      --cream: #f5f2ed;
       --text: #f0eeeb;
-      --muted: #a8b0c0;
+      --muted: #94a3b8;
       --white: #ffffff;
-      --font-serif: Georgia, 'Times New Roman', Times, serif;
+      --border: rgba(255,255,255,0.08);
+      --font-serif: 'Georgia', 'Times New Roman', Times, serif;
       --font-sans: system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
     }
 
@@ -27,11 +28,36 @@
       background: var(--navy);
       color: var(--text);
       line-height: 1.65;
-      font-size: 18px;
+      font-size: 17px;
+      overflow-x: hidden;
     }
 
     a { color: inherit; text-decoration: none; }
     img { max-width: 100%; display: block; }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(32px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes slideRight {
+      from { opacity: 0; transform: translateX(-24px); }
+      to   { opacity: 1; transform: translateX(0); }
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+                  transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .reveal-delay-1 { transition-delay: 0.12s; }
+    .reveal-delay-2 { transition-delay: 0.24s; }
+    .reveal-delay-3 { transition-delay: 0.36s; }
+    .reveal-delay-4 { transition-delay: 0.48s; }
 
     header {
       position: fixed;
@@ -40,242 +66,280 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 1.1rem 3rem;
-      background: rgba(11, 18, 32, 0.95);
-      backdrop-filter: blur(14px);
-      border-bottom: 1px solid rgba(255,255,255,0.07);
+      padding: 1rem 2.8rem;
+      background: rgba(10, 15, 26, 0.85);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid transparent;
+      transition: border-color 0.3s, padding 0.3s, background 0.3s;
+    }
+    header.scrolled {
+      border-bottom-color: var(--border);
+      padding: 0.75rem 2.8rem;
+      background: rgba(10, 15, 26, 0.95);
     }
     .logo {
       display: flex;
       align-items: center;
-      gap: 0.75rem;
+      gap: 0.7rem;
       font-weight: 700;
-      letter-spacing: 0.12em;
-      font-size: 1.3rem;
+      letter-spacing: 0.14em;
+      font-size: 1.15rem;
+      transition: opacity 0.2s;
     }
+    .logo:hover { opacity: 0.9; }
     .logo-mark {
-      width: 42px;
-      height: 42px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      width: 40px; height: 40px;
+      display: flex; align-items: center; justify-content: center;
       flex-shrink: 0;
     }
-    .logo-mark svg {
-      width: 42px;
-      height: 42px;
-    }
+    .logo-mark svg { width: 40px; height: 40px; }
     nav {
       display: flex;
-      gap: 2rem;
-      font-size: 0.95rem;
-      letter-spacing: 0.07em;
+      gap: 1.9rem;
+      font-size: 0.82rem;
+      letter-spacing: 0.1em;
       text-transform: uppercase;
       color: var(--muted);
     }
+    nav a {
+      position: relative;
+      transition: color 0.25s;
+    }
+    nav a::after {
+      content: '';
+      position: absolute;
+      left: 0; bottom: -4px;
+      width: 0; height: 1.5px;
+      background: var(--orange);
+      transition: width 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+    }
     nav a:hover { color: var(--white); }
+    nav a:hover::after { width: 100%; }
+
     .btn {
       display: inline-flex;
       align-items: center;
-      gap: 0.45rem;
+      gap: 0.4rem;
       background: var(--orange);
       color: var(--navy);
       font-weight: 650;
-      font-size: 1rem;
-      padding: 0.85rem 1.5rem;
-      border-radius: 5px;
-      transition: background 0.2s;
+      font-size: 0.9rem;
+      padding: 0.75rem 1.35rem;
+      border-radius: 6px;
       border: none;
       cursor: pointer;
+      transition: background 0.25s, transform 0.2s, box-shadow 0.25s;
     }
-    .btn:hover { background: var(--orange-hover); }
+    .btn:hover {
+      background: var(--orange-soft);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(232, 93, 4, 0.3);
+    }
+    .btn:active { transform: translateY(0); }
 
     .hero {
       min-height: 100vh;
       display: flex;
       align-items: center;
-      padding: 8rem 3rem 5rem;
-      background: linear-gradient(110deg, rgba(11,18,32,0.93) 38%, rgba(11,18,32,0.5) 100%),
+      padding: 7.5rem 2.8rem 5rem;
+      position: relative;
+      background: linear-gradient(115deg, rgba(10,15,26,0.94) 35%, rgba(10,15,26,0.55) 100%),
                   url('https://images.unsplash.com/photo-1436491865332-7a61a109cc05?auto=format&fit=crop&w=1920&q=80') center/cover no-repeat;
+      background-attachment: fixed;
     }
-    .hero-content { max-width: 720px; }
+    .hero-content { max-width: 700px; }
     .eyebrow {
-      font-size: 0.95rem;
-      letter-spacing: 0.2em;
+      font-size: 0.8rem;
+      letter-spacing: 0.22em;
       text-transform: uppercase;
       color: var(--orange);
-      margin-bottom: 1.4rem;
+      margin-bottom: 1.3rem;
       font-weight: 500;
+      animation: slideRight 0.8s cubic-bezier(0.22, 1, 0.36, 1) 0.15s both;
     }
     .hero h1 {
       font-family: var(--font-serif);
-      font-size: clamp(3.6rem, 8vw, 6.2rem);
-      line-height: 1.05;
+      font-size: clamp(3.4rem, 7.5vw, 5.8rem);
+      line-height: 1.06;
       font-weight: 400;
-      margin-bottom: 1.6rem;
+      margin-bottom: 1.5rem;
+      animation: fadeUp 0.9s cubic-bezier(0.22, 1, 0.36, 1) 0.25s both;
     }
     .hero h1 em {
       font-style: italic;
       color: var(--orange);
     }
     .hero p {
-      font-size: 1.35rem;
+      font-size: 1.2rem;
       color: var(--muted);
-      max-width: 540px;
-      margin-bottom: 2.2rem;
-      line-height: 1.55;
+      max-width: 500px;
+      margin-bottom: 2rem;
+      line-height: 1.6;
+      animation: fadeUp 0.9s cubic-bezier(0.22, 1, 0.36, 1) 0.4s both;
+    }
+    .hero .btn {
+      animation: fadeUp 0.9s cubic-bezier(0.22, 1, 0.36, 1) 0.55s both;
     }
 
     .page-section {
-      padding: 6rem 3rem;
-      max-width: 1100px;
+      padding: 5.5rem 2.8rem;
+      max-width: 1080px;
       margin: 0 auto;
-      min-height: 70vh;
     }
     .section-label {
-      font-size: 0.95rem;
-      letter-spacing: 0.18em;
+      font-size: 0.8rem;
+      letter-spacing: 0.2em;
       text-transform: uppercase;
       color: var(--orange);
-      margin-bottom: 1rem;
+      margin-bottom: 0.9rem;
       font-weight: 500;
     }
     h2 {
       font-family: var(--font-serif);
-      font-size: clamp(2.8rem, 5vw, 4rem);
+      font-size: clamp(2.5rem, 4.5vw, 3.6rem);
       font-weight: 400;
       line-height: 1.12;
-      margin-bottom: 1.6rem;
+      margin-bottom: 1.4rem;
     }
     h2 em { font-style: italic; color: var(--orange); }
-    h3 {
-      font-size: 1.45rem;
-      margin-bottom: 0.7rem;
-      font-weight: 600;
-    }
+    h3 { font-size: 1.3rem; margin-bottom: 0.6rem; font-weight: 600; }
     .lead {
-      font-size: 1.3rem;
+      font-size: 1.15rem;
       color: var(--muted);
-      max-width: 620px;
-      margin-bottom: 2.8rem;
-      line-height: 1.6;
+      max-width: 560px;
+      margin-bottom: 2.5rem;
+      line-height: 1.65;
     }
-    p { font-size: 1.15rem; }
 
     .grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 1.8rem;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
     }
     .card {
       background: var(--navy-card);
-      border: 1px solid rgba(255,255,255,0.07);
-      border-radius: 10px;
-      padding: 2.2rem;
-      transition: border-color 0.2s, transform 0.2s;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 2rem;
+      transition: border-color 0.3s, transform 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+                  box-shadow 0.35s;
     }
     .card:hover {
-      border-color: rgba(232,93,4,0.45);
-      transform: translateY(-3px);
+      border-color: rgba(232, 93, 4, 0.35);
+      transform: translateY(-6px);
+      box-shadow: 0 16px 40px rgba(0,0,0,0.35);
     }
     .card-num {
-      font-size: 0.9rem;
+      font-size: 0.8rem;
       color: var(--orange);
       letter-spacing: 0.12em;
-      margin-bottom: 1rem;
+      margin-bottom: 0.9rem;
     }
-    .card p {
-      font-size: 1.1rem;
-      color: var(--muted);
-    }
+    .card p { font-size: 1rem; color: var(--muted); line-height: 1.6; }
 
     .aircraft-list {
       list-style: none;
-      margin-top: 1.2rem;
+      margin-top: 1rem;
     }
     .aircraft-list li {
-      padding: 1rem 0;
-      border-bottom: 1px solid rgba(255,255,255,0.08);
+      padding: 0.95rem 0;
+      border-bottom: 1px solid var(--border);
       display: flex;
       justify-content: space-between;
       align-items: baseline;
-      gap: 1.5rem;
-      font-size: 1.2rem;
+      gap: 1.4rem;
+      font-size: 1.1rem;
+      transition: padding-left 0.25s, background 0.25s;
+    }
+    .aircraft-list li:hover {
+      padding-left: 8px;
+      background: rgba(255,255,255,0.02);
     }
     .aircraft-list li strong { font-weight: 600; }
     .aircraft-list li span {
       color: var(--muted);
-      font-size: 1.05rem;
+      font-size: 0.95rem;
       text-align: right;
     }
 
     .approach-steps {
       display: grid;
-      gap: 2.2rem;
-      margin-top: 2.5rem;
+      gap: 2rem;
+      margin-top: 2.2rem;
     }
     .step {
       display: grid;
-      grid-template-columns: 56px 1fr;
-      gap: 1.5rem;
+      grid-template-columns: 52px 1fr;
+      gap: 1.3rem;
       align-items: start;
     }
     .step-num {
-      width: 48px; height: 48px;
+      width: 46px; height: 46px;
       border: 1.5px solid var(--orange);
       color: var(--orange);
       display: grid;
       place-items: center;
       border-radius: 50%;
       font-weight: 650;
-      font-size: 1.1rem;
+      font-size: 1rem;
+      transition: background 0.3s, color 0.3s;
     }
-    .step h4 {
-      font-size: 1.35rem;
-      margin-bottom: 0.4rem;
+    .step:hover .step-num {
+      background: var(--orange);
+      color: var(--navy);
     }
-    .step p {
-      color: var(--muted);
-      font-size: 1.15rem;
-    }
+    .step h4 { font-size: 1.25rem; margin-bottom: 0.35rem; }
+    .step p { color: var(--muted); font-size: 1.05rem; }
 
     .contact-box {
       background: var(--navy-card);
-      border-radius: 14px;
-      padding: 4rem 3rem;
+      border-radius: 16px;
+      padding: 3.5rem 2.5rem;
       text-align: center;
-      border: 1px solid rgba(255,255,255,0.07);
+      border: 1px solid var(--border);
+      transition: border-color 0.3s, box-shadow 0.3s;
     }
-    .contact-box .lead {
-      margin-left: auto;
-      margin-right: auto;
+    .contact-box:hover {
+      border-color: rgba(232, 93, 4, 0.25);
+      box-shadow: 0 20px 50px rgba(0,0,0,0.3);
     }
+    .contact-box .lead { margin-left: auto; margin-right: auto; }
     .contact-box a.email {
       display: inline-block;
-      margin: 1.4rem 0;
-      font-size: 1.4rem;
+      margin: 1.2rem 0;
+      font-size: 1.3rem;
       color: var(--orange);
       font-weight: 500;
+      transition: letter-spacing 0.25s;
     }
-    .contact-box a.email:hover { text-decoration: underline; }
+    .contact-box a.email:hover {
+      text-decoration: underline;
+      letter-spacing: 0.03em;
+    }
 
     footer {
       text-align: center;
-      padding: 3rem;
-      font-size: 1rem;
+      padding: 2.5rem;
+      font-size: 0.9rem;
       color: var(--muted);
-      border-top: 1px solid rgba(255,255,255,0.07);
+      border-top: 1px solid var(--border);
     }
 
     @media (max-width: 900px) {
-      header { padding: 0.9rem 1.4rem; }
+      header { padding: 0.85rem 1.3rem; }
+      header.scrolled { padding: 0.7rem 1.3rem; }
       nav { display: none; }
-      .page-section, .hero { padding-left: 1.4rem; padding-right: 1.4rem; }
-      .hero { min-height: 88vh; padding-top: 7rem; }
+      .page-section, .hero { padding-left: 1.3rem; padding-right: 1.3rem; }
+      .hero {
+        min-height: 90vh;
+        padding-top: 6.5rem;
+        background-attachment: scroll;
+      }
       .aircraft-list li {
         flex-direction: column;
         align-items: flex-start;
-        gap: 0.3rem;
+        gap: 0.25rem;
       }
       .aircraft-list li span { text-align: left; }
     }
@@ -283,13 +347,13 @@
 </head>
 <body>
 
-  <header>
+  <header id="main-header">
     <a href="#top" class="logo">
       <span class="logo-mark" aria-label="AVIATION logo">
         <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
           <rect width="48" height="48" rx="8" fill="#e85d04"/>
-          <path d="M24 10 L38 34 H30 L24 24 L18 34 H10 L24 10Z" fill="#0b1220"/>
-          <path d="M14 28 H34" stroke="#0b1220" stroke-width="2.5" stroke-linecap="round"/>
+          <path d="M24 10 L38 34 H30 L24 24 L18 34 H10 L24 10Z" fill="#0a0f1a"/>
+          <path d="M14 28 H34" stroke="#0a0f1a" stroke-width="2.5" stroke-linecap="round"/>
         </svg>
       </span>
       AVIATION
@@ -315,22 +379,22 @@
   </section>
 
   <section class="page-section" id="about">
-    <p class="section-label">About the Agency</p>
-    <h2>Better decisions<br><em>take flight.</em></h2>
-    <p class="lead">
+    <p class="section-label reveal">About the Agency</p>
+    <h2 class="reveal">Better decisions<br><em>take flight.</em></h2>
+    <p class="lead reveal reveal-delay-1">
       AVIATION is a focused business and consulting agency for a sector where details matter.
       We bring practical operating knowledge, commercial perspective, and a calm approach to every engagement.
     </p>
     <div class="grid">
-      <div class="card">
+      <div class="card reveal reveal-delay-1">
         <h3>Independent</h3>
         <p>We work for the client’s outcome, not for a particular lessor, operator or manufacturer. Advice stays clear and unbiased.</p>
       </div>
-      <div class="card">
+      <div class="card reveal reveal-delay-2">
         <h3>Operationally grounded</h3>
         <p>Recommendations are tested against real operating constraints — crew, maintenance, permits, ramp and commercial reality.</p>
       </div>
-      <div class="card">
+      <div class="card reveal reveal-delay-3">
         <h3>Cross-border</h3>
         <p>Work spans Egypt, Europe, the Middle East and beyond. We understand the regulatory and commercial interfaces that matter.</p>
       </div>
@@ -338,27 +402,26 @@
   </section>
 
   <section class="page-section" id="services">
-    <p class="section-label">Our Capabilities</p>
-    <h2>Built around<br><em>your runway.</em></h2>
-    <p class="lead">From a single advisory question to a full operational mandate, our work is shaped around what your business needs next.</p>
-
+    <p class="section-label reveal">Our Capabilities</p>
+    <h2 class="reveal">Built around<br><em>your runway.</em></h2>
+    <p class="lead reveal reveal-delay-1">From a single advisory question to a full operational mandate, our work is shaped around what your business needs next.</p>
     <div class="grid">
-      <div class="card">
+      <div class="card reveal reveal-delay-1">
         <div class="card-num">01 ↗</div>
         <h3>Operations</h3>
         <p>Turn operational complexity into dependable performance, from flight ops to ground handling and performance monitoring.</p>
       </div>
-      <div class="card">
+      <div class="card reveal reveal-delay-2">
         <div class="card-num">02 ✦</div>
         <h3>Training & Quality</h3>
         <p>Build confident teams and practical systems that make compliance part of daily culture rather than an afterthought.</p>
       </div>
-      <div class="card">
+      <div class="card reveal reveal-delay-3">
         <div class="card-num">03 ⌁</div>
         <h3>Safety Management</h3>
         <p>See risk sooner with resilient SMS design, audit readiness, and safety assurance that works in the real world.</p>
       </div>
-      <div class="card">
+      <div class="card reveal reveal-delay-4">
         <div class="card-num">04 ◌</div>
         <h3>Aircraft Brokerage</h3>
         <p>Connect lessors and lessees with clear briefs, trusted relationships, and informed commercial decisions.</p>
@@ -367,14 +430,13 @@
   </section>
 
   <section class="page-section" id="cargo">
-    <p class="section-label">Cargo Aircraft</p>
-    <h2>Freighters by<br><em>category.</em></h2>
-    <p class="lead">
+    <p class="section-label reveal">Cargo Aircraft</p>
+    <h2 class="reveal">Freighters by<br><em>category.</em></h2>
+    <p class="lead reveal reveal-delay-1">
       Wet lease (ACMI), charter, ad-hoc and long-term dry lease options for freighter aircraft.
       Current focus includes seasonal programmes such as CAI–Europe fresh-produce capacity.
     </p>
-
-    <ul class="aircraft-list">
+    <ul class="aircraft-list reveal reveal-delay-2">
       <li><strong>Boeing 747-400BCF / 747-400F</strong> <span>Wet lease (ACMI) · Charter</span></li>
       <li><strong>Boeing 777-200F</strong> <span>Ad hoc charter · Series</span></li>
       <li><strong>Airbus A330-200F</strong> <span>Wet lease (ACMI) · Long-term dry lease</span></li>
@@ -387,14 +449,13 @@
   </section>
 
   <section class="page-section" id="lease">
-    <p class="section-label">Dry Lease · Wet Lease · Charter</p>
-    <h2>Other aircraft<br><em>available.</em></h2>
-    <p class="lead">
+    <p class="section-label reveal">Dry Lease · Wet Lease · Charter</p>
+    <h2 class="reveal">Other aircraft<br><em>available.</em></h2>
+    <p class="lead reveal reveal-delay-1">
       Passenger and convertible types for dry lease, wet lease (ACMI) and charter.
       Structures are matched to the operator’s AOC, route network and commercial model.
     </p>
-
-    <ul class="aircraft-list">
+    <ul class="aircraft-list reveal reveal-delay-2">
       <li><strong>Airbus A320-200</strong> <span>Dry lease · Wet lease (ACMI)</span></li>
       <li><strong>Boeing 737-800</strong> <span>Dry lease · Wet lease (ACMI)</span></li>
       <li><strong>Airbus A330-200 / -300</strong> <span>Wet lease (ACMI)</span></li>
@@ -404,25 +465,24 @@
   </section>
 
   <section class="page-section" id="approach">
-    <p class="section-label">Our Approach</p>
-    <h2>Precise where<br><em>it matters most.</em></h2>
-
+    <p class="section-label reveal">Our Approach</p>
+    <h2 class="reveal">Precise where<br><em>it matters most.</em></h2>
     <div class="approach-steps">
-      <div class="step">
+      <div class="step reveal reveal-delay-1">
         <div class="step-num">01</div>
         <div>
           <h4>Listen first.</h4>
           <p>We start with the real operating context, commercial constraints and timeline — not a pre-packaged answer.</p>
         </div>
       </div>
-      <div class="step">
+      <div class="step reveal reveal-delay-2">
         <div class="step-num">02</div>
         <div>
           <h4>Make it useful.</h4>
           <p>Every recommendation should hold up in a boardroom and on the ramp. Practical beats theoretical.</p>
         </div>
       </div>
-      <div class="step">
+      <div class="step reveal reveal-delay-3">
         <div class="step-num">03</div>
         <div>
           <h4>Stay alongside.</h4>
@@ -433,7 +493,7 @@
   </section>
 
   <section class="page-section" id="contact">
-    <div class="contact-box">
+    <div class="contact-box reveal">
       <p class="section-label">Let’s talk aviation</p>
       <h2>Tell us where<br><em>you’re headed.</em></h2>
       <p class="lead">
@@ -443,7 +503,7 @@
       <a class="email" href="mailto:cap.samy60@gmail.com">cap.samy60@gmail.com ↗</a>
       <br><br>
       <a href="mailto:cap.samy60@gmail.com" class="btn">Send inquiry →</a>
-      <p style="margin-top: 1.8rem; color: var(--muted); font-size: 1.1rem;">
+      <p style="margin-top: 1.6rem; color: var(--muted); font-size: 1rem;">
         +20 102 007 4104 · +20 112 125 1373
       </p>
     </div>
@@ -453,5 +513,22 @@
     © 2024–2026 AVIATION Business & Consulting Agency · All rights reserved
   </footer>
 
+  <script>
+    const header = document.getElementById('main-header');
+    window.addEventListener('scroll', () => {
+      header.classList.toggle('scrolled', window.scrollY > 40);
+    }, { passive: true });
+
+    const reveals = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+
+    reveals.forEach(el => observer.observe(el));
+  </script>
 </body>
 </html>
