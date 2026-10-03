@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AVIATION | Business & Consulting Agency</title>
+  <meta name="description" content="Independent aviation expertise for operators, owners, lessors, lessees. Cargo aircraft, ACMI, dry lease, charter and consulting." />
+  <style>
+    :root {
+      --navy: #0b1220;
+      --navy-light: #141e30;
+      --navy-card: #182234;
+      --orange: #e85d04;
+      --orange-hover: #f48c06;
+      --cream: #f8f5f0;
+      --text: #f0eeeb;
+      --muted: #a8b0c0;
+      --white: #ffffff;
+      --font-serif: Georgia, 'Times New Roman', Times, serif;
+      --font-sans: system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: var(--font-sans);
+      background: var(--navy);
+      color: var(--text);
+      line-height: 1.65;
+      font-size: 18px;
+    }
+
+    a { color: inherit; text-decoration: none; }
+    img { max-width: 100%; display: block; }
+
+    header {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.1rem 3rem;
+      background: rgba(11, 18, 32, 0.95);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid rgba(255,255,255,0.07);
+    }
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      font-size: 1.3rem;
+    }
+    .logo-mark {
+      width: 42px;
+      height: 42px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .logo-mark svg {
+      width: 42px;
+      height: 42px;
+    }
+    nav {
+      display: flex;
+      gap: 2rem;
+      font-size: 0.95rem;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    nav a:hover { color: var(--white); }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      background: var(--orange);
+      color: var(--navy);
+      font-weight: 650;
+      font-size: 1rem;
+      padding: 0.85rem 1.5rem;
+      border-radius: 5px;
+      transition: background 0.2s;
+      border: none;
+      cursor: pointer;
+    }
+    .btn:hover { background: var(--orange-hover); }
+
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      padding: 8rem 3rem 5rem;
+      background: linear-gradient(110deg, rgba(11,18,32,0.93) 38%, rgba(11,18,32,0.5) 100%),
+                  url('https://images.unsplash.com/photo-1436491865332-7a61a109cc05?auto=format&fit=crop&w=1920&q=80') center/cover no-repeat;
+    }
+    .hero-content { max-width: 720px; }
+    .eyebrow {
+      font-size: 0.95rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--orange);
+      margin-bottom: 1.4rem;
+      font-weight: 500;
+    }
+    .hero h1 {
+      font-family: var(--font-serif);
+      font-size: clamp(3.6rem, 8vw, 6.2rem);
+      line-height: 1.05;
+      font-weight: 400;
+      margin-bottom: 1.6rem;
+    }
+    .hero h1 em {
+      font-style: italic;
+      color: var(--orange);
+    }
+    .hero p {
+      font-size: 1.35rem;
+      color: var(--muted);
+      max-width: 540px;
+      margin-bottom: 2.2rem;
+      line-height: 1.55;
+    }
+
+    .page-section {
+      padding: 6rem 3rem;
+      max-width: 1100px;
+      margin: 0 auto;
+      min-height: 70vh;
+    }
+    .section-label {
+      font-size: 0.95rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--orange);
+      margin-bottom: 1rem;
+      font-weight: 500;
+    }
+    h2 {
+      font-family: var(--font-serif);
+      font-size: clamp(2.8rem, 5vw, 4rem);
+      font-weight: 400;
+      line-height: 1.12;
+      margin-bottom: 1.6rem;
+    }
+    h2 em { font-style: italic; color: var(--orange); }
+    h3 {
+      font-size: 1.45rem;
+      margin-bottom: 0.7rem;
+      font-weight: 600;
+    }
+    .lead {
+      font-size: 1.3rem;
+      color: var(--muted);
+      max-width: 620px;
+      margin-bottom: 2.8rem;
+      line-height: 1.6;
+    }
+    p { font-size: 1.15rem; }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1.8rem;
+    }
+    .card {
+      background: var(--navy-card);
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 10px;
+      padding: 2.2rem;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+    .card:hover {
+      border-color: rgba(232,93,4,0.45);
+      transform: translateY(-3px);
+    }
+    .card-num {
+      font-size: 0.9rem;
+      color: var(--orange);
+      letter-spacing: 0.12em;
+      margin-bottom: 1rem;
+    }
+    .card p {
+      font-size: 1.1rem;
+      color: var(--muted);
+    }
+
+    .aircraft-list {
+      list-style: none;
+      margin-top: 1.2rem;
+    }
+    .aircraft-list li {
+      padding: 1rem 0;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 1.5rem;
+      font-size: 1.2rem;
+    }
+    .aircraft-list li strong { font-weight: 600; }
+    .aircraft-list li span {
+      color: var(--muted);
+      font-size: 1.05rem;
+      text-align: right;
+    }
+
+    .approach-steps {
+      display: grid;
+      gap: 2.2rem;
+      margin-top: 2.5rem;
+    }
+    .step {
+      display: grid;
+      grid-template-columns: 56px 1fr;
+      gap: 1.5rem;
+      align-items: start;
+    }
+    .step-num {
+      width: 48px; height: 48px;
+      border: 1.5px solid var(--orange);
+      color: var(--orange);
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      font-weight: 650;
+      font-size: 1.1rem;
+    }
+    .step h4 {
+      font-size: 1.35rem;
+      margin-bottom: 0.4rem;
+    }
+    .step p {
+      color: var(--muted);
+      font-size: 1.15rem;
+    }
+
+    .contact-box {
+      background: var(--navy-card);
+      border-radius: 14px;
+      padding: 4rem 3rem;
+      text-align: center;
+      border: 1px solid rgba(255,255,255,0.07);
+    }
+    .contact-box .lead {
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .contact-box a.email {
+      display: inline-block;
+      margin: 1.4rem 0;
+      font-size: 1.4rem;
+      color: var(--orange);
+      font-weight: 500;
+    }
+    .contact-box a.email:hover { text-decoration: underline; }
+
+    footer {
+      text-align: center;
+      padding: 3rem;
+      font-size: 1rem;
+      color: var(--muted);
+      border-top: 1px solid rgba(255,255,255,0.07);
+    }
+
+    @media (max-width: 900px) {
+      header { padding: 0.9rem 1.4rem; }
+      nav { display: none; }
+      .page-section, .hero { padding-left: 1.4rem; padding-right: 1.4rem; }
+      .hero { min-height: 88vh; padding-top: 7rem; }
+      .aircraft-list li {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.3rem;
+      }
+      .aircraft-list li span { text-align: left; }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <a href="#top" class="logo">
+      <span class="logo-mark" aria-label="AVIATION logo">
+        <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect width="48" height="48" rx="8" fill="#e85d04"/>
+          <path d="M24 10 L38 34 H30 L24 24 L18 34 H10 L24 10Z" fill="#0b1220"/>
+          <path d="M14 28 H34" stroke="#0b1220" stroke-width="2.5" stroke-linecap="round"/>
+        </svg>
+      </span>
+      AVIATION
+    </a>
+    <nav>
+      <a href="#about">About</a>
+      <a href="#services">Services</a>
+      <a href="#cargo">Cargo Aircraft</a>
+      <a href="#lease">Lease & Charter</a>
+      <a href="#approach">Approach</a>
+      <a href="#contact">Contact</a>
+    </nav>
+    <a href="#contact" class="btn">Start a Conversation →</a>
+  </header>
+
+  <section class="hero" id="top">
+    <div class="hero-content">
+      <p class="eyebrow">Aviation Business & Consulting Agency — Est. 2024</p>
+      <h1>Clarity for<br><em>every altitude.</em></h1>
+      <p>Independent aviation expertise for operators, owners, lessors, lessees, and the people who keep the industry moving.</p>
+      <a href="#contact" class="btn">Discuss your brief →</a>
+    </div>
+  </section>
+
+  <section class="page-section" id="about">
+    <p class="section-label">About the Agency</p>
+    <h2>Better decisions<br><em>take flight.</em></h2>
+    <p class="lead">
+      AVIATION is a focused business and consulting agency for a sector where details matter.
+      We bring practical operating knowledge, commercial perspective, and a calm approach to every engagement.
+    </p>
+    <div class="grid">
+      <div class="card">
+        <h3>Independent</h3>
+        <p>We work for the client’s outcome, not for a particular lessor, operator or manufacturer. Advice stays clear and unbiased.</p>
+      </div>
+      <div class="card">
+        <h3>Operationally grounded</h3>
+        <p>Recommendations are tested against real operating constraints — crew, maintenance, permits, ramp and commercial reality.</p>
+      </div>
+      <div class="card">
+        <h3>Cross-border</h3>
+        <p>Work spans Egypt, Europe, the Middle East and beyond. We understand the regulatory and commercial interfaces that matter.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="page-section" id="services">
+    <p class="section-label">Our Capabilities</p>
+    <h2>Built around<br><em>your runway.</em></h2>
+    <p class="lead">From a single advisory question to a full operational mandate, our work is shaped around what your business needs next.</p>
+
+    <div class="grid">
+      <div class="card">
+        <div class="card-num">01 ↗</div>
+        <h3>Operations</h3>
+        <p>Turn operational complexity into dependable performance, from flight ops to ground handling and performance monitoring.</p>
+      </div>
+      <div class="card">
+        <div class="card-num">02 ✦</div>
+        <h3>Training & Quality</h3>
+        <p>Build confident teams and practical systems that make compliance part of daily culture rather than an afterthought.</p>
+      </div>
+      <div class="card">
+        <div class="card-num">03 ⌁</div>
+        <h3>Safety Management</h3>
+        <p>See risk sooner with resilient SMS design, audit readiness, and safety assurance that works in the real world.</p>
+      </div>
+      <div class="card">
+        <div class="card-num">04 ◌</div>
+        <h3>Aircraft Brokerage</h3>
+        <p>Connect lessors and lessees with clear briefs, trusted relationships, and informed commercial decisions.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="page-section" id="cargo">
+    <p class="section-label">Cargo Aircraft</p>
+    <h2>Freighters by<br><em>category.</em></h2>
+    <p class="lead">
+      Wet lease (ACMI), charter, ad-hoc and long-term dry lease options for freighter aircraft.
+      Current focus includes seasonal programmes such as CAI–Europe fresh-produce capacity.
+    </p>
+
+    <ul class="aircraft-list">
+      <li><strong>Boeing 747-400BCF / 747-400F</strong> <span>Wet lease (ACMI) · Charter</span></li>
+      <li><strong>Boeing 777-200F</strong> <span>Ad hoc charter · Series</span></li>
+      <li><strong>Airbus A330-200F</strong> <span>Wet lease (ACMI) · Long-term dry lease</span></li>
+      <li><strong>Boeing 767-300F</strong> <span>Wet lease (ACMI) · Long-term dry lease</span></li>
+      <li><strong>Boeing 767-200F</strong> <span>Wet lease (ACMI) · Ad hoc charter</span></li>
+      <li><strong>Boeing 757-200F</strong> <span>Wet lease (ACMI) · Charter</span></li>
+      <li><strong>Boeing 737-800F</strong> <span>Dry lease · Wet lease · Charter (2 aircraft)</span></li>
+      <li><strong>Boeing 737-300F / 400F</strong> <span>Wet lease (ACMI)</span></li>
+    </ul>
+  </section>
+
+  <section class="page-section" id="lease">
+    <p class="section-label">Dry Lease · Wet Lease · Charter</p>
+    <h2>Other aircraft<br><em>available.</em></h2>
+    <p class="lead">
+      Passenger and convertible types for dry lease, wet lease (ACMI) and charter.
+      Structures are matched to the operator’s AOC, route network and commercial model.
+    </p>
+
+    <ul class="aircraft-list">
+      <li><strong>Airbus A320-200</strong> <span>Dry lease · Wet lease (ACMI)</span></li>
+      <li><strong>Boeing 737-800</strong> <span>Dry lease · Wet lease (ACMI)</span></li>
+      <li><strong>Airbus A330-200 / -300</strong> <span>Wet lease (ACMI)</span></li>
+      <li><strong>Boeing 757-200</strong> <span>Wet lease (ACMI)</span></li>
+      <li><strong>Airbus A340 family</strong> <span>Charter / ACMI (subject to configuration)</span></li>
+    </ul>
+  </section>
+
+  <section class="page-section" id="approach">
+    <p class="section-label">Our Approach</p>
+    <h2>Precise where<br><em>it matters most.</em></h2>
+
+    <div class="approach-steps">
+      <div class="step">
+        <div class="step-num">01</div>
+        <div>
+          <h4>Listen first.</h4>
+          <p>We start with the real operating context, commercial constraints and timeline — not a pre-packaged answer.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">02</div>
+        <div>
+          <h4>Make it useful.</h4>
+          <p>Every recommendation should hold up in a boardroom and on the ramp. Practical beats theoretical.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">03</div>
+        <div>
+          <h4>Stay alongside.</h4>
+          <p>Sustainable change comes from capability transfer, not dependency on the advisor.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="page-section" id="contact">
+    <div class="contact-box">
+      <p class="section-label">Let’s talk aviation</p>
+      <h2>Tell us where<br><em>you’re headed.</em></h2>
+      <p class="lead">
+        Have a mandate, an aircraft requirement, a seasonal cargo programme, or a question that needs an experienced view?
+        Send a note directly to our team.
+      </p>
+      <a class="email" href="mailto:cap.samy60@gmail.com">cap.samy60@gmail.com ↗</a>
+      <br><br>
+      <a href="mailto:cap.samy60@gmail.com" class="btn">Send inquiry →</a>
+      <p style="margin-top: 1.8rem; color: var(--muted); font-size: 1.1rem;">
+        +20 102 007 4104 · +20 112 125 1373
+      </p>
+    </div>
+  </section>
+
+  <footer>
+    © 2024–2026 AVIATION Business & Consulting Agency · All rights reserved
+  </footer>
+
+</body>
+</html>
